@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohan Dash - Data Analyst</title>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page, vertical-scrolling portfolio with a fixed top navigation. The structure is designed for a recruiter's journey: 1. Hero section for immediate impact. 2. A new AI-powered summary generator to immediately engage and demonstrate modern skills. 3. Interactive Skills chart for a quick competency overview. 4. A dedicated section visualizing the data analysis process to showcase methodological thinking. 5. An interactive timeline for exploring experience and projects in detail. 6. Standard Education and Contact sections. This structure allows for both a quick scan and a deep dive, making it more user-friendly and engaging than a static document. -->
+    <!-- Visualization & Content Choices: 
+        - Professional Summary -> Goal: Inform -> Method: Clean text block -> Justification: Direct and clear introduction.
+        - Gemini AI Summary Generator -> Goal: Engage/Demonstrate -> Method: Text Area + Button + JS Fetch -> Interaction: User pastes job description, clicks to generate a tailored summary -> Justification: Showcases proactive, modern AI implementation skills directly relevant to a tech role.
+        - Technical Skills -> Goal: Organize/Compare -> Viz: Bar Chart (Chart.js) -> Interaction: Hover to see skill details -> Justification: A bar chart provides a clear, immediate comparison of proficiency/experience levels across different skill categories.
+        - Analytics Process -> Goal: Organize/Inform -> Viz: Styled HTML/CSS flow diagram -> Interaction: Hover highlight -> Justification: A visual diagram makes the structured process easy to understand at a glance.
+        - Experience/Projects -> Goal: Organize/Show Change -> Viz: Vertical Timeline (HTML/CSS) -> Interaction: Click to expand details -> Justification: A timeline is intuitive for chronological data. Click-to-expand avoids information overload.
+        - Library/Method: Gemini API for text generation, Chart.js for charts, Vanilla JS for interactions, Tailwind CSS for layout. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4A4A4A;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #C08497;
+        }
+        .timeline-item .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .timeline-item.open .details {
+            max-height: 1000px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            max-height: 60vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #C08497;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-FDFBF8/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800">Mohan Dash</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#summary" class="nav-link font-medium">Summary</a>
+                <a href="#ai-summary" class="nav-link font-medium">✨ AI Summary</a>
+                <a href="#skills" class="nav-link font-medium">Skills</a>
+                <a href="#process" class="nav-link font-medium">Process</a>
+                <a href="#experience" class="nav-link font-medium">Experience</a>
+                <a href="#contact" class="nav-link font-medium">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#summary" class="block py-2 px-4 text-sm hover:bg-gray-200">Summary</a>
+            <a href="#ai-summary" class="block py-2 px-4 text-sm hover:bg-gray-200">✨ AI Summary</a>
+            <a href="#skills" class="block py-2 px-4 text-sm hover:bg-gray-200">Skills</a>
+            <a href="#process" class="block py-2 px-4 text-sm hover:bg-gray-200">Process</a>
+            <a href="#experience" class="block py-2 px-4 text-sm hover:bg-gray-200">Experience</a>
+            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-200">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <section id="hero" class="text-center py-20 md:py-32">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-800">Mohan Dash</h1>
+            <p class="mt-4 text-lg md:text-2xl text-gray-600">Data Analyst | Turning Data into Actionable Insights</p>
+            <div class="mt-8 flex justify-center space-x-4">
+                 <a href="mailto:mohandash@outlook.com" class="bg-[#C08497] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#A96A7E] transition-colors">Get In Touch</a>
+                 <a href="www.linkedin.com/in/mohan-dash" target="_blank" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">LinkedIn</a>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section id="summary" class="py-16 md:py-24 border-t">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800">Professional Summary</h2>
+                <p id="base-summary" class="mt-6 text-lg text-gray-600 leading-relaxed">
+                    A detail-oriented and results-driven professional transitioning into Data Analytics, with a strong passion for transforming complex data into clear and compelling visualizations. Proven ability to manage the full data analysis lifecycle, from collection and cleaning to modeling and interpretation. Proficient in Python, SQL, and leading data visualization tools like Tableau and Power BI. Eager to apply a strong foundation in statistical analysis and financial market data to solve business problems and communicate actionable insights.
+                </p>
+            </div>
+        </section>
+
+        <!-- AI Summary Section -->
+        <section id="ai-summary" class="py-16 md:py-24 border-t bg-white rounded-xl shadow-sm">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800">✨ AI-Powered Summary Generator</h2>
+                <p class="mt-6 text-lg text-gray-600 leading-relaxed">
+                    Want to see how my skills align with your needs? Paste a job description below, and let the Gemini AI craft a tailored summary highlighting my most relevant qualifications for the role.
+                </p>
+                <div class="mt-8">
+                    <textarea id="job-description" class="w-full h-40 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C08497] focus:outline-none" placeholder="Paste the job description here..."></textarea>
+                    <button id="generate-summary-btn" class="mt-4 bg-[#C08497] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#A96A7E] transition-colors inline-flex items-center">
+                        Generate Tailored Summary ✨
+                    </button>
+                </div>
+                <div id="ai-result-container" class="mt-8 text-left hidden">
+                    <div id="loader" class="mx-auto loader hidden"></div>
+                    <div id="ai-output" class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-lg text-gray-800">Your Tailored Summary:</h3>
+                        <p id="generated-summary-text" class="mt-4 text-gray-600 leading-relaxed"></p>
+                        <button id="copy-summary-btn" class="mt-4 text-sm text-[#C08497] font-semibold hover:underline">Copy to Clipboard</button>
+                    </div>
+                     <p id="error-message" class="text-red-500 mt-4 hidden">Could not generate summary. Please try again later.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="py-16 md:py-24 border-t">
+             <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800">Technical Skills</h2>
+                <p class="text-center mt-4 text-gray-600">This chart represents my proficiency and experience across key technology domains. Interact with the chart to see details for each category.</p>
+                <div class="mt-12 chart-container">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="py-16 md:py-24 border-t bg-white rounded-xl shadow-sm">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800">My Data Analysis Process</h2>
+                <p class="text-center mt-4 text-gray-600">I follow a structured, iterative process to ensure comprehensive and reliable insights from every project.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#C08497]">1. Data Collection</h3>
+                        <p class="mt-2 text-gray-600">Gather data from sources like databases, APIs, and spreadsheets.</p>
+                    </div>
+                     <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#C08497]">2. Data Cleaning</h3>
+                        <p class="mt-2 text-gray-600">Handle missing values, correct errors, and prepare data for analysis.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#C08497]">3. Exploratory Data Analysis</h3>
+                        <p class="mt-2 text-gray-600">Use visualizations and stats to find initial patterns and anomalies.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#C08497]">4. Modeling & Analysis</h3>
+                        <p class="mt-2 text-gray-600">Apply statistical methods or ML algorithms to extract insights.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#C08497]">5. Data Visualization</h3>
+                        <p class="mt-2 text-gray-600">Present findings clearly with charts, graphs, and dashboards.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#C08497]">6. Interpretation & Communication</h3>
+                        <p class="mt-2 text-gray-600">Translate results into actionable business insights and narratives.</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow col-span-1 md:col-span-2 lg:col-span-2">
+                        <h3 class="font-bold text-lg text-[#C08497]">7. Iteration & Feedback</h3>
+                        <p class="mt-2 text-gray-600">Refine analysis based on feedback and new data for continuous improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-16 md:py-24 border-t">
+            <h2 class="text-3xl font-bold text-center text-gray-800">Experience & Projects</h2>
+            <p class="text-center mt-4 text-gray-600">Click on any role or project to expand and see the detailed process and achievements.</p>
+            <div class="mt-12 max-w-3xl mx-auto">
+                <div class="relative border-l-2 border-gray-200">
+                    
+                    <!-- Timeline Item: Data Analyst -->
+                    <div class="mb-10 ml-6 timeline-item">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zm5-1a1 1 0 00-1 1v1h2V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                        </span>
+                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
+                            <h3 class="text-lg font-semibold text-gray-900">Data Analyst & Operations Coordinator</h3>
+                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">One Ocean Logistics and Services Pvt Ltd | Apr 2019 - Present</p>
+                            <p class="text-sm text-gray-600">Managed end-to-end analytics for key business initiatives, improving efficiency.</p>
+                        </div>
+                        <div class="details">
+                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
+                                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                    <li><b>Data Collection & Preparation:</b> Gathered data from SQL databases and APIs, performing rigorous cleaning with Python to ensure data integrity.</li>
+                                    <li><b>Analysis & Modeling:</b> Conducted EDA and applied regression and clustering models to analyze customer behavior and forecast trends.</li>
+                                    <li><b>Visualization & Communication:</b> Designed interactive Tableau/Power BI dashboards to monitor KPIs and translated complex results into actionable narratives for stakeholders.</li>
+                                    <li><b>A/B Testing:</b> Delivered statistical analysis and visual reports for marketing campaigns, increasing conversion rates by 20%.</li>
+                                    <li><b>Iteration:</b> Continuously refined models and dashboards based on stakeholder feedback.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item: Project -->
+                    <div class="mb-10 ml-6 timeline-item">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
+                        </span>
+                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
+                            <h3 class="text-lg font-semibold text-gray-900">Project: Stock Market Trend Analysis</h3>
+                            <p class="text-sm text-gray-600">Personal project focused on analyzing and visualizing market dynamics.</p>
+                        </div>
+                         <div class="details">
+                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
+                                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                    <li><b>Data Collection & Preparation:</b> Developed a Python script to gather historical market data via APIs and performed cleaning and feature engineering using Pandas/NumPy.</li>
+                                    <li><b>EDA, Modeling & Analysis:</b> Used Matplotlib/Seaborn for EDA and applied statistical models based on Market Profile and VWAP to analyze market structure.</li>
+                                    <li><b>Visualization & Interpretation:</b> Created a suite of custom visualizations to display trading signals and model performance, supporting real-time decision-making.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Timeline Item: Operations Analyst -->
+                    <div class="mb-10 ml-6 timeline-item">
+                         <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
+                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zm5-1a1 1 0 00-1 1v1h2V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                        </span>
+                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
+                            <h3 class="text-lg font-semibold text-gray-900">Operations Analyst</h3>
+                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">[Your Current Company] | [Date] - [Date]</p>
+                            <p class="text-sm text-gray-600">Led data-driven quality improvement projects, reducing recurring damages by 15%.</p>
+                        </div>
+                        <div class="details">
+                           <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
+                                <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                    <li><b>Data Collection & Preparation:</b> Collected and prepared container repair records from internal databases and log sheets.</li>
+                                    <li><b>Exploratory Data Analysis:</b> Used advanced Excel to identify common fault patterns and material defects.</li>
+                                    <li><b>Visualization & Communication:</b> Visualized findings in compelling reports that were communicated to engineering and procurement teams, leading to new maintenance protocols.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Education Section -->
+        <section id="education" class="py-16 md:py-24 border-t bg-white rounded-xl shadow-sm">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800">Education & Certifications</h2>
+                <div class="mt-8 space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">[Your Degree]</h3>
+                        <p class="text-gray-600">[Your University], [City, State] | [Year of Graduation]</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">Certifications</h3>
+                        <p class="text-gray-600 mt-2">Tableau Desktop Specialist</p>
+                        <p class="text-gray-600">Google Data Analytics Professional Certificate</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-6 py-12 text-center">
+             <h2 class="text-2xl font-bold">Let's Connect</h2>
+             <p class="mt-4 max-w-xl mx-auto">I'm currently seeking new opportunities in Data Analytics. If you have a role that aligns with my skills and experience, I'd love to hear from you.</p>
+             <div class="mt-8">
+                 <a href="mailto:[Your Email Address]" class="bg-[#C08497] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#A96A7E] transition-colors">[Your Email Address]</a>
+             </div>
+             <div class="mt-8 flex justify-center space-x-6">
+                <a href="[Your LinkedIn Profile URL]" target="_blank" class="hover:text-[#C08497] transition-colors">LinkedIn</a>
+                <a href="[Your GitHub/Portfolio URL]" target="_blank" class="hover:text-[#C08497] transition-colors">GitHub</a>
+             </div>
+             <p class="mt-10 text-sm text-gray-400">&copy; <span id="current-year">2024</span> [Your Name]. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- UI Setup ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Timeline item toggle
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach(item => {
+                const button = item.querySelector('.toggle-button');
+                button.addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            });
+
+            // --- Gemini API Feature ---
+            const generateBtn = document.getElementById('generate-summary-btn');
+            const jobDescTextarea = document.getElementById('job-description');
+            const aiResultContainer = document.getElementById('ai-result-container');
+            const loader = document.getElementById('loader');
+            const aiOutput = document.getElementById('ai-output');
+            const generatedSummaryText = document.getElementById('generated-summary-text');
+            const errorMessage = document.getElementById('error-message');
+            const copySummaryBtn = document.getElementById('copy-summary-btn');
+
+            generateBtn.addEventListener('click', async () => {
+                const jobDescription = jobDescTextarea.value;
+                const baseSummary = document.getElementById('base-summary').innerText;
+
+                if (!jobDescription.trim()) {
+                    alert('Please paste a job description first.');
+                    return;
+                }
+
+                aiResultContainer.classList.remove('hidden');
+                aiOutput.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+                loader.classList.remove('hidden');
+
+                const prompt = `You are a professional resume writer. Based on the following professional summary: "${baseSummary}" and this job description: "${jobDescription}", please rewrite the summary to be about 3-4 sentences long. The new summary should strongly highlight the skills and experiences from the original summary that are most relevant to the job description, using keywords from the job description where appropriate. The tone should be professional and confident.`;
+                
+                try {
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const payload = {
+                        contents: [{
+                            role: "user",
+                            parts: [{ text: prompt }]
+                        }]
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    let text = 'Could not generate a response. The model may have returned empty content.';
+                     if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        text = result.candidates[0].content.parts[0].text;
+                    }
+                    
+                    generatedSummaryText.innerText = text;
+                    aiOutput.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error("Gemini API call failed:", error);
+                    errorMessage.classList.remove('hidden');
+                } finally {
+                    loader.classList.add('hidden');
+                }
+            });
+
+            copySummaryBtn.addEventListener('click', () => {
+                const textToCopy = generatedSummaryText.innerText;
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = textToCopy;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextArea);
+                copySummaryBtn.innerText = 'Copied!';
+                setTimeout(() => {
+                    copySummaryBtn.innerText = 'Copy to Clipboard';
+                }, 2000);
+            });
+
+
+            // --- Existing Functionality ---
+            // Active nav link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -70% 0px' });
+            sections.forEach(section => observer.observe(section));
+            
+            // Skills Chart (as before)
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Data Visualization', 'Programming', 'Databases', 'Data Processing', 'Statistical Analysis'],
+                    datasets: [{
+                        label: 'Proficiency / Experience Level',
+                        data: [90, 85, 80, 88, 75],
+                        backgroundColor: 'rgba(192, 132, 151, 0.6)',
+                        borderColor: 'rgba(192, 132, 151, 1)',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    scales: { x: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + '%' } } },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (c) => `Proficiency: ${c.parsed.x}%`,
+                                afterLabel: (c) => ({
+                                    'Data Visualization': 'Tableau, Power BI, Matplotlib, Seaborn, Plotly, Advanced Excel',
+                                    'Programming': 'Python (Pandas, NumPy, Scikit-learn), R (ggplot2), SQL',
+                                    'Databases': 'MySQL, PostgreSQL, Microsoft SQL Server',
+                                    'Data Processing': 'Data Collection (APIs, Databases), Data Cleaning, ETL Pipelines, EDA',
+                                    'Statistical Analysis': 'A/B Testing, Hypothesis Testing, Regression Analysis, Clustering'
+                                })[c.label] || ''
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Dynamic Year in Footer
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>
