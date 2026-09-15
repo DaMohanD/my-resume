@@ -1,533 +1,643 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohan Dash - Data Scientist | ML Engineer</title>
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: A single-page, vertical-scrolling portfolio with a fixed top navigation. The structure is designed for a recruiter's journey: 1. Hero section for immediate impact. 2. A new AI-powered summary generator to immediately engage and demonstrate modern skills. 3. Interactive Skills chart for a quick competency overview. 4. A dedicated section visualizing the data analysis process to showcase methodological thinking. 5. An interactive timeline for exploring experience and projects in detail. 6. Standard Education and Contact sections. This structure allows for both a quick scan and a deep dive, making it more user-friendly and engaging than a static document. -->
-    <!-- Visualization & Content Choices: 
-        - Professional Summary -> Goal: Inform -> Method: Clean text block -> Justification: Direct and clear introduction.
-        - Gemini AI Summary Generator -> Goal: Engage/Demonstrate -> Method: Text Area + Button + JS Fetch -> Interaction: User pastes job description, clicks to generate a tailored summary -> Justification: Showcases proactive, modern AI implementation skills directly relevant to a tech role.
-        - Technical Skills -> Goal: Organize/Compare -> Viz: Bar Chart (Chart.js) -> Interaction: Hover to see skill details -> Justification: A bar chart provides a clear, immediate comparison of proficiency/experience levels across different skill categories.
-        - Analytics Process -> Goal: Organize/Inform -> Viz: Styled HTML/CSS flow diagram -> Interaction: Hover highlight -> Justification: A visual diagram makes the structured process easy to understand at a glance.
-        - Experience/Projects -> Goal: Organize/Show Change -> Viz: Vertical Timeline (HTML/CSS) -> Interaction: Click to expand details -> Justification: A timeline is intuitive for chronological data. Click-to-expand avoids information overload.
-        - Library/Method: Gemini API for text generation, Chart.js for charts, Vanilla JS for interactions, Tailwind CSS for layout. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF8;
-            color: #4A4A4A;
-        }
-        .nav-link {
-            transition: color 0.3s ease;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: #C08497;
-        }
-        .timeline-item .details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-        .timeline-item.open .details {
-            max-height: 1000px;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            max-height: 60vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 500px;
-            }
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #C08497;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohan Dash — Data Scientist &amp; ML Engineer</title>
+<meta name="description" content="Data Scientist and ML Engineer with 7+ years in container logistics. End-to-end ML pipelines, deep learning, and production deployments. Open to roles in India and remote.">
+<meta name="author" content="Mohan Dash">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Mohan Dash — Data Scientist &amp; ML Engineer">
+<meta property="og:description" content="7+ years in container logistics, now building end-to-end ML systems. Two production web apps shipped into live depot operations.">
+<meta property="og:url" content="https://damohand.github.io/">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314232D'/%3E%3Cpath d='M7 9h18v14H7z' fill='none' stroke='%2317607F' stroke-width='2'/%3E%3Cpath d='M12 9v14M16 9v14M20 9v14' stroke='%2317607F' stroke-width='1.5'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --yard:#E9ECEE;
+  --plate:#FFFFFF;
+  --ink:#14232D;
+  --steel:#546670;
+  --seal:#17607F;
+  --line:#CDD5DA;
+  --line-soft:#E0E5E8;
+  --measure:66ch;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--yard);
+  color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,.sans{font-family:Archivo,"Helvetica Neue",Arial,sans-serif;font-weight:600;letter-spacing:-0.015em;line-height:1.15;margin:0}
+
+a{color:var(--seal);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--seal);outline-offset:3px;border-radius:2px}
+
+.wrap{width:min(100% - 2.5rem, 68rem);margin-inline:auto}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(233,236,238,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.topbar__inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 0}
+.brand{font-family:Archivo,sans-serif;font-weight:700;font-size:1rem;letter-spacing:.02em;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.navlinks{display:flex;gap:1.6rem}
+.navlinks a{
+  font-family:Archivo,sans-serif;font-size:.86rem;font-weight:500;
+  color:var(--steel);padding-bottom:2px;border-bottom:2px solid transparent;
+}
+.navlinks a:hover{color:var(--ink);text-decoration:none}
+.navlinks a.active{color:var(--ink);border-bottom-color:var(--seal)}
+.menubtn{display:none;background:none;border:1px solid var(--line);border-radius:3px;padding:.4rem .6rem;cursor:pointer;color:var(--ink)}
+.mobilenav{display:none;border-top:1px solid var(--line-soft);padding:.5rem 0 1rem}
+.mobilenav.open{display:block}
+.mobilenav a{display:block;font-family:Archivo,sans-serif;font-size:.95rem;color:var(--ink);padding:.55rem 0}
+
+@media (max-width:760px){
+  .navlinks{display:none}
+  .menubtn{display:block}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 2px, rgba(0,0,0,.05) 2px 4px, transparent 4px 17px),
+    linear-gradient(175deg,#1B2F3C 0%,#14232D 55%,#101C25 100%);
+  color:#E9ECEE;
+  border-bottom:3px solid var(--seal);
+}
+.hero__inner{padding:5.5rem 0 3.4rem}
+.hero__role{
+  font-family:Archivo,sans-serif;font-size:.9rem;font-weight:500;
+  color:#8FB4C6;margin:0 0 1.1rem;letter-spacing:.01em;
+}
+.hero h1{
+  font-size:clamp(2.9rem,9vw,5.6rem);
+  font-weight:700;letter-spacing:-0.035em;color:#fff;
+}
+.hero__line{
+  max-width:52ch;margin:1.4rem 0 0;
+  font-size:1.12rem;color:#C3D0D8;
+}
+.hero__actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.1rem}
+.btn{
+  font-family:Archivo,sans-serif;font-size:.9rem;font-weight:600;
+  padding:.72rem 1.3rem;border-radius:3px;border:1px solid transparent;cursor:pointer;
+  display:inline-block;
+}
+.btn:hover{text-decoration:none}
+.btn--solid{background:var(--seal);color:#fff}
+.btn--solid:hover{background:#1A7396}
+.btn--ghost{border-color:#41606F;color:#D4DFE5}
+.btn--ghost:hover{border-color:#8FB4C6;color:#fff}
+
+/* stencil plate */
+.plate{
+  margin-top:3rem;
+  border:1px solid #37535F;
+  background:rgba(255,255,255,.035);
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.plate div{padding:.95rem 1.2rem;border-right:1px solid #37535F}
+.plate div:last-child{border-right:0}
+.plate dt{
+  font-family:Archivo,sans-serif;font-size:.68rem;font-weight:600;
+  color:#7FA3B5;letter-spacing:.09em;margin:0 0 .3rem;
+}
+.plate dd{margin:0;font-family:Archivo,sans-serif;font-size:.97rem;font-weight:500;color:#EDF2F4}
+@media (max-width:640px){
+  .plate{grid-template-columns:1fr}
+  .plate div{border-right:0;border-bottom:1px solid #37535F}
+  .plate div:last-child{border-bottom:0}
+}
+
+/* ---------- sections ---------- */
+.section{padding:4.2rem 0;border-bottom:1px solid var(--line)}
+.section:last-of-type{border-bottom:0}
+.section > h2{font-size:1.6rem;margin-bottom:.4rem}
+.section__note{color:var(--steel);font-size:.98rem;margin:0 0 2.2rem;max-width:var(--measure)}
+.section > h2.h2--spaced{margin-bottom:2rem}
+.prose{max-width:var(--measure);font-size:1.08rem;margin:0}
+
+/* ---------- skills ---------- */
+.skillrow{
+  display:grid;grid-template-columns:13rem 1fr;gap:1.6rem;
+  padding:1.35rem 0;border-top:1px solid var(--line-soft);
+}
+.skillrow:last-child{border-bottom:1px solid var(--line-soft)}
+.skillrow h3{font-size:.98rem;font-weight:600;color:var(--ink);padding-top:.15rem}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;margin:0;padding:0;list-style:none}
+.tags li{
+  font-family:Archivo,sans-serif;font-size:.83rem;font-weight:500;
+  background:var(--plate);border:1px solid var(--line);
+  padding:.3rem .6rem;border-radius:3px;color:#33454F;
+}
+@media (max-width:700px){
+  .skillrow{grid-template-columns:1fr;gap:.8rem}
+}
+
+/* ---------- records ---------- */
+.groupmark{
+  font-family:Archivo,sans-serif;font-size:.8rem;font-weight:600;
+  color:var(--steel);letter-spacing:.06em;
+  margin:2.8rem 0 .9rem;padding-bottom:.5rem;border-bottom:1px solid var(--line);
+}
+.groupmark:first-of-type{margin-top:0}
+
+.record{border-bottom:1px solid var(--line-soft)}
+.record__head{
+  width:100%;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;
+  background:none;border:0;padding:1.3rem 0;text-align:left;cursor:pointer;
+  font:inherit;color:inherit;
+}
+.record__head:hover .record__title{color:var(--seal)}
+.record__head > span:first-child{display:block;min-width:0}
+.record__title{display:block;font-family:Archivo,sans-serif;font-weight:600;font-size:1.07rem;line-height:1.35;transition:color .15s ease}
+.record__meta{display:block;font-size:.9rem;color:var(--steel);margin:.35rem 0 0}
+.record__stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+.record__stack span{
+  font-family:Archivo,sans-serif;font-size:.76rem;color:#4A6270;
+  border:1px solid var(--line);padding:.15rem .45rem;border-radius:2px;background:var(--plate);
+}
+.chev{
+  flex:none;width:1.65rem;height:1.65rem;border:1px solid var(--line);border-radius:3px;
+  display:grid;place-items:center;color:var(--seal);background:var(--plate);
+  transition:transform .25s ease;margin-top:.15rem;
+}
+.record[data-open="1"] .chev{transform:rotate(180deg)}
+
+.record__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.record[data-open="1"] .record__body{grid-template-rows:1fr}
+.record__body > div{overflow:hidden}
+.record__body ul{
+  margin:0 0 1.5rem;padding:1.1rem 1.3rem 1.1rem 2.4rem;
+  background:var(--plate);border-left:3px solid var(--seal);
+  max-width:var(--measure);
+}
+.record__body li{margin-bottom:.7rem}
+.record__body li:last-child{margin-bottom:0}
+.record__body strong{font-weight:600;color:var(--ink)}
+
+/* ---------- education ---------- */
+.edu{display:grid;gap:1.4rem;max-width:var(--measure)}
+.edu > div{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:baseline;padding-bottom:1.1rem;border-bottom:1px solid var(--line-soft)}
+.edu h3{font-size:1.02rem}
+.edu p{margin:.25rem 0 0;color:var(--steel);font-size:.95rem}
+.edu time{font-family:Archivo,sans-serif;font-size:.86rem;color:var(--steel);white-space:nowrap}
+@media (max-width:560px){.edu > div{grid-template-columns:1fr}}
+
+/* ---------- footer ---------- */
+.foot{background:var(--ink);color:#C3D0D8;margin-top:0;padding:3.6rem 0 2.2rem}
+.foot h2{color:#fff;font-size:1.5rem}
+.foot p{max-width:48ch;margin:1rem 0 0}
+.foot__links{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem}
+.foot__links a{font-family:Archivo,sans-serif;font-size:.95rem;color:#8FB4C6}
+.foot__links a:hover{color:#fff}
+.foot__base{margin-top:2.6rem;padding-top:1.2rem;border-top:1px solid #2A3E4A;font-size:.85rem;color:#7C93A1}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}
+</style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Header & Navigation -->
-    <header class="bg-FDFBF8/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-xl font-bold text-gray-800">Mohan Dash</div>
-            <div class="hidden md:flex space-x-8">
-                <a href="#summary" class="nav-link font-medium">Summary</a>
-                <!-- <a href="#ai-summary" class="nav-link font-medium">✨ AI Summary</a> -->
-                <a href="#skills" class="nav-link font-medium">Skills</a>
-                <a href="#process" class="nav-link font-medium">Process</a>
-                <a href="#experience" class="nav-link font-medium">Experience</a>
-                <a href="#contact" class="nav-link font-medium">Contact</a>
-            </div>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-            </div>
-        </nav>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#summary" class="block py-2 px-4 text-sm hover:bg-gray-200">Summary</a>
-            <!-- <a href="#ai-summary" class="block py-2 px-4 text-sm hover:bg-gray-200">✨ AI Summary</a> -->
-            <a href="#skills" class="block py-2 px-4 text-sm hover:bg-gray-200">Skills</a>
-            <a href="#process" class="block py-2 px-4 text-sm hover:bg-gray-200">Process</a>
-            <a href="#experience" class="block py-2 px-4 text-sm hover:bg-gray-200">Experience</a>
-            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-200">Contact</a>
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a href="#top" class="brand">Mohan Dash</a>
+    <nav class="navlinks" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="mobilenav" aria-label="Open menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div class="wrap"><div class="mobilenav" id="mobilenav">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#work">Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div></div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <p class="hero__role">Data Scientist and ML Engineer</p>
+      <h1>Mohan Dash</h1>
+      <p class="hero__line">I build machine learning systems for logistics — from feature engineering and model training through to deployment on live depot operations.</p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="Mohan_Dash_Resume.pdf" download>Download resume (PDF)</a>
+        <a class="btn btn--ghost" href="mailto:mohandash176@outlook.com">Email me</a>
+        <a class="btn btn--ghost" href="https://github.com/DaMohanD" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <dl class="plate">
+        <div><dt>Experience</dt><dd>7+ years</dd></div>
+        <div><dt>Based in</dt><dd>Greater Noida, India</dd></div>
+        <div><dt>Open to</dt><dd>Bengaluru &amp; remote</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <section class="section" id="about">
+      <h2>About</h2>
+      <p class="section__note">What I do and where I'm heading.</p>
+      <p class="prose">
+        Seven years running data and operations inside container logistics has given me something most
+        analysts have to simulate: messy, multi-source, high-stakes data and the stakeholders who depend
+        on getting it right. I've used that ground to build end-to-end ML work — EDA and feature
+        engineering through neural network training, model interpretability, containerised deployment and
+        CI/CD. Two of my applications run in live depot operations today, and analysis I led improved depot
+        uptime by roughly 15%. I'm completing an M.Sc. in Computer Science (AI&nbsp;&amp;&nbsp;ML) at Woolf
+        University through Scaler Neovarsity, and I'm looking for Data Scientist and ML Engineer roles
+        where the modelling has to survive contact with real operations.
+      </p>
+    </section>
+
+    <section class="section" id="skills">
+      <h2>Skills</h2>
+      <p class="section__note">Tools and methods I've used in shipped work or full case studies, not a reading list.</p>
+
+      <div class="skillrow">
+        <h3>Languages &amp; data</h3>
+        <ul class="tags">
+          <li>Python</li><li>Pandas</li><li>NumPy</li><li>scikit-learn</li><li>Matplotlib</li>
+          <li>Seaborn</li><li>Plotly</li><li>SQL</li><li>JavaScript</li><li>HTML</li>
+        </ul>
+      </div>
+
+      <div class="skillrow">
+        <h3>ML &amp; statistics</h3>
+        <ul class="tags">
+          <li>Regression</li><li>Classification</li><li>Clustering</li><li>Random Forest</li><li>XGBoost</li>
+          <li>Recommender systems</li><li>Time series</li><li>Hypothesis testing</li>
+          <li>Feature engineering</li><li>Cross-validation</li><li>SHAP</li>
+        </ul>
+      </div>
+
+      <div class="skillrow">
+        <h3>Deep learning</h3>
+        <ul class="tags">
+          <li>Neural networks</li><li>Forward &amp; backpropagation</li><li>MLP</li>
+          <li>CNN (incl. from scratch in NumPy)</li><li>Autoencoders</li>
+          <li>Optimizers (SGD, Momentum, RMSProp, Adam)</li>
+          <li>TensorFlow</li><li>Keras</li><li>LIME</li>
+        </ul>
+      </div>
+
+      <div class="skillrow">
+        <h3>MLOps &amp; engineering</h3>
+        <ul class="tags">
+          <li>Git &amp; GitHub</li><li>Docker</li><li>DockerHub</li><li>Flask</li><li>Streamlit</li>
+          <li>MLflow</li><li>GitHub Actions</li><li>AWS ECS</li><li>AWS SageMaker</li>
+          <li>Apache Spark</li><li>REST APIs</li><li>ML system design</li>
+        </ul>
+      </div>
+
+      <div class="skillrow">
+        <h3>Analytics &amp; BI</h3>
+        <ul class="tags">
+          <li>Tableau</li><li>Power BI</li><li>Advanced Excel</li><li>Jupyter</li><li>EDA pipelines</li><li>ETL</li>
+        </ul>
+      </div>
+
+      <div class="skillrow">
+        <h3>Domain</h3>
+        <ul class="tags">
+          <li>Container logistics</li><li>Depot operations</li><li>Predictive maintenance</li>
+          <li>KPI design</li><li>Dwell-time &amp; cost optimisation</li><li>Supply chain analytics</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <h2>Work</h2>
+      <p class="section__note">Select a role to read the detail.</p>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Data Scientist &amp; Operations Lead</span>
+            <span class="record__meta">One Ocean Logistics and Services Pvt. Ltd. — Noida, India — April 2019 to present</span>
+            <span class="record__stack"><span>Python</span><span>scikit-learn</span><span>SQL</span><span>Tableau</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Led a cross-functional operations team of 120–150 across depot operations, repair, procurement and finance, driving data-informed workflow changes, revised SLAs and contractor performance improvements.</li>
+            <li>Engineered Python EDA pipelines to surface recurring equipment defect patterns and delay drivers; the findings went into procurement and maintenance protocols and delivered <strong>~15% improvement in depot uptime</strong>.</li>
+            <li>Built and deployed regression-based <strong>predictive maintenance models</strong> (scikit-learn) forecasting equipment failure cycles, which made manpower planning, spare-parts procurement and downtime planning proactive rather than reactive.</li>
+            <li>Designed and maintained <strong>Tableau dashboards</strong> covering throughput, repair cycle time, equipment utilisation and exception trends — the single source of truth in depot performance reviews with senior stakeholders.</li>
+            <li>Ran dwell-time, storage cost and repair turnaround analysis across operations logs, repair records and financial data; management adopted the recommendations, cutting average dwell time and avoiding demurrage charges.</li>
+            <li>Owned the full analytics lifecycle: ingestion and cleaning of messy multi-source data, statistical modelling, insight generation, and executive-level recommendations.</li>
+          </ul>
+        </div></div>
+      </article>
+    </section>
+
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+      <p class="section__note">Two products running in production, plus case studies from my M.Sc. coursework.</p>
+
+      <h3 class="groupmark">Shipped products</h3>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Depot Sync Pro — container depot management platform</span>
+            <span class="record__meta">Live and deployed</span>
+            <span class="record__stack"><span>Python</span><span>Flask</span><span>JavaScript</span><span>Docker</span><span>AWS ECS</span><span>GitHub Actions</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Led end-to-end development of a full-stack platform automating container lifecycle tracking — intake, storage, repair, release — replacing spreadsheet-driven tracking with a rules-based automation layer that cut repetitive data entry and reconciliation work.</li>
+            <li>Built an embedded analytics layer surfacing throughput, dwell and exception patterns to depot teams in real time, removing the manual report-generation step from daily decisions.</li>
+            <li>Directed containerisation and deployment: Docker images to DockerHub, Flask APIs on AWS ECS, and GitHub Actions CI/CD automating build, test and release.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Matriq — material management system for SME logistics</span>
+            <span class="record__meta">Live and deployed</span>
+            <span class="record__stack"><span>Python</span><span>JavaScript</span><span>Web deployment</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Led development of a production-grade material management system positioned as a lightweight, automation-first alternative to SAP MM for SME logistics companies, covering inventory tracking, purchase orders, GRN and reporting.</li>
+            <li>Built automated data-processing logic flagging stock anomalies, reorder thresholds and reconciliation mismatches, reducing manual review effort across inventory and purchase-order workflows.</li>
+            <li>Ran competitive analysis against ERPNext, Odoo and Zoho Inventory to find the automation and analytics gaps in existing SME tools, then positioned Matriq's reporting for the Indian SME logistics market with non-technical users in mind.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <h3 class="groupmark">ML case studies</h3>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Porter — delivery time estimation with neural network regression</span>
+            <span class="record__meta">M.Sc. business case study</span>
+            <span class="record__stack"><span>TensorFlow</span><span>Keras</span><span>MLP</span><span>LIME</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Framed delivery-time estimation as an ETA optimisation problem and built a neural network regression model predicting delivery time from order, item and store-level features.</li>
+            <li>Designed and trained a <strong>multilayer perceptron</strong> in TensorFlow/Keras, applying forward and backpropagation fundamentals, and benchmarked SGD, RMSProp and Adam for convergence and validation error.</li>
+            <li>Engineered features from real delivery data — distance, order value, staffing, traffic-adjacent signals — and applied regularisation and dropout to control overfitting.</li>
+            <li>Used <strong>LIME</strong> to explain individual delivery-time predictions, turning model behaviour into something a business stakeholder can act on.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">CNN from scratch — image classification</span>
+            <span class="record__meta">M.Sc. coursework</span>
+            <span class="record__stack"><span>NumPy</span><span>TensorFlow</span><span>Keras</span><span>Autoencoders</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Implemented a convolutional neural network from first principles in NumPy — convolution, pooling and backpropagation through conv layers — to understand the internals, then reproduced and extended the architecture in Keras for benchmarking.</li>
+            <li>Explored autoencoders for unsupervised feature learning and dimensionality reduction, comparing reconstruction quality and latent-space behaviour against a PCA baseline.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">End-to-end ML pipeline on AWS SageMaker</span>
+            <span class="record__meta">MLOps coursework</span>
+            <span class="record__stack"><span>AWS SageMaker</span><span>Apache Spark</span><span>Python</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Built end-to-end ML pipelines on AWS SageMaker covering model training, evaluation and deployment.</li>
+            <li>Processed large-scale datasets with Apache Spark for distributed feature engineering and data transformation.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Cars24 — ML tool with experiment tracking</span>
+            <span class="record__meta">MLOps coursework</span>
+            <span class="record__stack"><span>Streamlit</span><span>MLflow</span><span>Git</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Built an end-to-end ML-powered tool in Streamlit for the Cars24 use case.</li>
+            <li>Integrated MLflow for experiment tracking, model versioning and data management across iterative development cycles.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">OLA — driver churn prediction with ensemble learning</span>
+            <span class="record__meta">M.Sc. coursework</span>
+            <span class="record__stack"><span>Random Forest</span><span>XGBoost</span><span>SHAP</span><span>scikit-learn</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Built an ensemble classifier (Random Forest + XGBoost) predicting driver churn from behavioural and transactional features.</li>
+            <li>Ran hyperparameter tuning and cross-validation, then used SHAP feature importance to identify the top churn drivers and interpret model output for business stakeholders.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Delhivery — feature engineering for logistics routing</span>
+            <span class="record__meta">M.Sc. coursework</span>
+            <span class="record__stack"><span>Pandas</span><span>NumPy</span><span>scikit-learn</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Engineered 30+ features from raw delivery data — time-based, route-based and categorical encodings — to improve downstream model performance.</li>
+            <li>Applied outlier treatment, missing-value imputation and scaling pipelines, documenting the rationale for each feature so the work stays reproducible and explainable.</li>
+          </ul>
+        </div></div>
+      </article>
+
+      <article class="record" data-open="0">
+        <button class="record__head" aria-expanded="false">
+          <span>
+            <span class="record__title">Zee Entertainment — hybrid recommender system</span>
+            <span class="record__meta">M.Sc. coursework</span>
+            <span class="record__stack"><span>Collaborative filtering</span><span>Content-based NLP</span><span>Matrix factorisation</span></span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="record__body"><div>
+          <ul>
+            <li>Designed a hybrid recommendation engine for a streaming catalogue, combining collaborative filtering with content-based NLP.</li>
+            <li>Evaluated with RMSE and precision@k, comparing cold-start behaviour across filtering strategies.</li>
+          </ul>
+        </div></div>
+      </article>
+    </section>
+
+    <section class="section" id="education">
+      <h2 class="h2--spaced">Education</h2>
+      <div class="edu">
+        <div>
+          <div>
+            <h3>M.Sc. Computer Science (AI &amp; ML)</h3>
+            <p>Woolf University — Scaler Neovarsity</p>
+          </div>
+          <time>2024 – present</time>
         </div>
-    </header>
-
-    <main class="container mx-auto px-6">
-        <!-- Hero Section -->
-        <section id="hero" class="text-center py-20 md:py-32">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-800">Mohan Dash</h1>
-            <p class="mt-4 text-lg md:text-2xl text-gray-600">Data Scientist | ML Engineer | Analytics & Operations</p>
-            <div class="mt-8 flex justify-center space-x-4">
-                 <a href="mailto:mohandash176@outlook.com" class="bg-[#C08497] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#A96A7E] transition-colors">Get In Touch</a>
-                <a href="https://www.linkedin.com/in/mohan-dash" target="_blank" rel="noopener" class="bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors">LinkedIn</a>
-            </div>
-        </section>
-
-        <!-- Summary Section -->
-        <section id="summary" class="py-16 md:py-24 border-t">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-gray-800">Professional Summary</h2>
-                <p id="base-summary" class="mt-6 text-lg text-gray-600 leading-relaxed">
-                    Results-driven Data Scientist and ML Engineer with 6+ years of experience in container logistics and depot operations. Proven track record of building end-to-end ML pipelines — from EDA and feature engineering to model deployment — using Python, scikit-learn, and SQL. Hands-on experience developing and deploying production web applications (Depot Sync Pro, Matriq). Skilled at translating complex analytical findings into measurable business outcomes including ~15% improvement in depot uptime. Pursuing M.Sc. in Computer Science (AI & ML). Open to Data Scientist, ML Engineer, and Senior Analyst roles across India and globally.
-                </p>
-            </div>
-        </section>
-
-        <!-- AI Summary Section
-        <section id="ai-summary" class="py-16 md:py-24 border-t bg-white rounded-xl shadow-sm">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-gray-800">✨ AI-Powered Summary Generator</h2>
-                <p class="mt-6 text-lg text-gray-600 leading-relaxed">
-                    Want to see how my skills align with your needs? Paste a job description below, and let the Gemini AI craft a tailored summary highlighting my most relevant qualifications for the role.
-                </p>
-                <div class="mt-8">
-                    <textarea id="job-description" class="w-full h-40 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C08497] focus:outline-none" placeholder="Paste the job description here..."></textarea>
-                    <button id="generate-summary-btn" class="mt-4 bg-[#C08497] text-white font-bold py-3 px-6 rounded-lg hover:bg-[#A96A7E] transition-colors inline-flex items-center">
-                        Generate Tailored Summary ✨
-                    </button>
-                </div>
-                <div id="ai-result-container" class="mt-8 text-left hidden">
-                    <div id="loader" class="mx-auto loader hidden"></div>
-                    <div id="ai-output" class="p-6 bg-gray-50 rounded-lg border border-gray-200">
-                        <h3 class="font-bold text-lg text-gray-800">Your Tailored Summary:</h3>
-                        <p id="generated-summary-text" class="mt-4 text-gray-600 leading-relaxed"></p>
-                        <button id="copy-summary-btn" class="mt-4 text-sm text-[#C08497] font-semibold hover:underline">Copy to Clipboard</button>
-                    </div>
-                     <p id="error-message" class="text-red-500 mt-4 hidden">Could not generate summary. Please try again later.</p>
-                </div>
-            </div>
-        </section> -->
-        
-        <!-- Skills Section -->
-        <section id="skills" class="py-16 md:py-24 border-t">
-             <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-center text-gray-800">Technical Skills</h2>
-                <p class="text-center mt-4 text-gray-600">This chart represents my proficiency across key technology and domain areas. Interact with the chart to see details for each category.</p>
-                <div class="mt-12 chart-container">
-                    <canvas id="skillsChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- Process Section -->
-        <section id="process" class="py-16 md:py-24 border-t bg-white rounded-xl shadow-sm">
-            <div class="max-w-5xl mx-auto">
-                <h2 class="text-3xl font-bold text-center text-gray-800">My Data Analysis Process</h2>
-                <p class="text-center mt-4 text-gray-600">I follow a structured, iterative process to ensure comprehensive and reliable insights from every project.</p>
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-lg text-[#C08497]">1. Data Collection</h3>
-                        <p class="mt-2 text-gray-600">Gather data from sources like databases, APIs, and spreadsheets.</p>
-                    </div>
-                     <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-lg text-[#C08497]">2. Data Cleaning</h3>
-                        <p class="mt-2 text-gray-600">Handle missing values, correct errors, and prepare data for analysis.</p>
-                    </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-lg text-[#C08497]">3. Exploratory Data Analysis</h3>
-                        <p class="mt-2 text-gray-600">Use visualizations and stats to find initial patterns and anomalies.</p>
-                    </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-lg text-[#C08497]">4. Modeling & Analysis</h3>
-                        <p class="mt-2 text-gray-600">Apply statistical methods or ML algorithms to extract insights.</p>
-                    </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-lg text-[#C08497]">5. Data Visualization</h3>
-                        <p class="mt-2 text-gray-600">Present findings clearly with charts, graphs, and dashboards.</p>
-                    </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                        <h3 class="font-bold text-lg text-[#C08497]">6. Interpretation & Communication</h3>
-                        <p class="mt-2 text-gray-600">Translate results into actionable business insights and narratives.</p>
-                    </div>
-                    <div class="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow col-span-1 md:col-span-2 lg:col-span-2">
-                        <h3 class="font-bold text-lg text-[#C08497]">7. Iteration & Feedback</h3>
-                        <p class="mt-2 text-gray-600">Refine analysis based on feedback and new data for continuous improvement.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="py-16 md:py-24 border-t">
-            <h2 class="text-3xl font-bold text-center text-gray-800">Experience & Projects</h2>
-            <p class="text-center mt-4 text-gray-600">Click on any role or project to expand and see the detailed process and achievements.</p>
-            <div class="mt-12 max-w-3xl mx-auto">
-                <div class="relative border-l-2 border-gray-200">
-                    
-                    <!-- Timeline Item: Data Analyst -->
-                    <div class="mb-10 ml-6 timeline-item">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
-                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h2zm5-1a1 1 0 00-1 1v1h2V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                        </span>
-                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
-                            <h3 class="text-lg font-semibold text-gray-900">Data Analyst & Operations Coordinator</h3>
-                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">One Ocean Logistics and Services Pvt. Ltd. | April 2019 – Present | Noida, India</p>
-                            <p class="text-sm text-gray-600">End-to-end ML pipelines and analytics for container logistics and depot operations.</p>
-                        </div>
-                        <div class="details">
-                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
-                                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                                    <li>Engineered Python-based EDA pipelines to identify recurring equipment defect patterns and delay drivers; findings integrated into procurement and maintenance protocols, achieving <b>~15% improvement in depot uptime</b>.</li>
-                                    <li>Built and deployed <b>regression-based predictive maintenance models</b> in Python (scikit-learn) to forecast failure cycles, enabling more accurate manpower, spares, and downtime planning.</li>
-                                    <li>Designed and maintained <b>Tableau dashboards</b> tracking KPIs — throughput, repair cycle time, equipment utilization, and exception trends — serving as single source of truth across depot performance reviews.</li>
-                                    <li>Conducted <b>dwell-time, storage cost, and repair turnaround analysis</b> to expose cost and delay drivers; recommendations adopted by management, reducing average dwell time and preventing avoidable demurrage charges.</li>
-                                    <li>Managed full analytics lifecycle across messy, multi-source data (operations logs, repair records, financial data): <b>ingestion, cleaning, modeling</b>, and presenting business recommendations to senior stakeholders.</li>
-                                    <li>Collaborated cross-functionally with operations, engineering, procurement, and finance teams to convert analytical insights into workflow changes, revised SLAs, and contractor performance improvements.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item: Depot Sync Pro -->
-                    <div class="mb-10 ml-6 timeline-item">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
-                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
-                        </span>
-                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
-                            <h3 class="text-lg font-semibold text-gray-900">Depot Sync Pro — Container Depot Management Web App</h3>
-                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">Python · JavaScript · REST API · Web Deployment | Live / Deployed</p>
-                            <p class="text-sm text-gray-600">Full-stack web app for container lifecycle tracking at depots.</p>
-                        </div>
-                        <div class="details">
-                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
-                                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                                    <li>Designed and deployed a full-stack web application for container lifecycle tracking at depots — covering intake, storage, repair, and release workflows.</li>
-                                    <li>Integrated operational analytics layer for real-time visibility into container movement, enabling data-driven decision-making for depot managers.</li>
-                                    <li>Built for production use, demonstrating end-to-end software ownership from requirements gathering to deployment.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item: Matriq -->
-                    <div class="mb-10 ml-6 timeline-item">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
-                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
-                        </span>
-                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
-                            <h3 class="text-lg font-semibold text-gray-900">Matriq — SAP Inspired Material Management Web App</h3>
-                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">Python · JavaScript · Web Deployment · SME Logistics | Live / Deployed</p>
-                            <p class="text-sm text-gray-600">Lightweight SAP MM alternative for SME logistics companies.</p>
-                        </div>
-                        <div class="details">
-                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
-                                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                                    <li>Developed a live, web-based Material Management System targeting SME logistics companies as a lightweight alternative to SAP MM.</li>
-                                    <li>Covers core MM modules: inventory tracking, purchase orders, GRN, and reporting — built with a focus on usability for non-technical logistics users.</li>
-                                    <li>Positioned commercially for the Indian SME logistics market; conducted competitive analysis against ERPNext, Odoo, and Zoho Inventory.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item: OLA -->
-                    <div class="mb-10 ml-6 timeline-item">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
-                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
-                        </span>
-                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
-                            <h3 class="text-lg font-semibold text-gray-900">OLA — Ensemble Learning for Driver Churn Prediction</h3>
-                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">Python · scikit-learn · Random Forest · XGBoost · SHAP | Academic Project</p>
-                            <p class="text-sm text-gray-600">Ensemble classification model to predict driver churn using behavioral features.</p>
-                        </div>
-                        <div class="details">
-                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
-                                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                                    <li>Built an ensemble classification model (Random Forest + XGBoost) to predict driver churn for OLA using behavioral and transactional features.</li>
-                                    <li>Performed hyperparameter tuning, cross-validation, and SHAP-based feature importance analysis to identify top churn drivers and interpret model outputs for business stakeholders.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item: Delhivery -->
-                    <div class="mb-10 ml-6 timeline-item">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
-                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
-                        </span>
-                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
-                            <h3 class="text-lg font-semibold text-gray-900">Delhivery — Feature Engineering for Logistics Routing</h3>
-                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">Python · Pandas · NumPy · scikit-learn · EDA | Academic Project</p>
-                            <p class="text-sm text-gray-600">Engineered 30+ features from raw logistics delivery data.</p>
-                        </div>
-                        <div class="details">
-                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
-                                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                                    <li>Engineered 30+ features from raw logistics delivery data including time-based, route-based, and categorical encoding features to improve downstream model performance.</li>
-                                    <li>Applied outlier treatment, missing-value imputation, and scaling pipelines; documented feature rationale for reproducibility and business explainability.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Timeline Item: Zee Entertainment -->
-                    <div class="mb-10 ml-6 timeline-item">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-[#C08497] rounded-full -left-3 ring-8 ring-white">
-                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
-                        </span>
-                        <div class="p-4 bg-white rounded-lg border border-gray-200 shadow-sm cursor-pointer toggle-button">
-                            <h3 class="text-lg font-semibold text-gray-900">Zee Entertainment — Recommender System</h3>
-                            <p class="block mb-2 text-sm font-normal leading-none text-gray-500">Python · Collaborative Filtering · Content-Based Filtering · Matrix Factorisation | Academic Project</p>
-                            <p class="text-sm text-gray-600">Hybrid content recommendation engine for a streaming platform.</p>
-                        </div>
-                        <div class="details">
-                            <div class="p-4 mt-2 bg-gray-50 rounded-lg border border-gray-200">
-                                <ul class="list-disc list-inside space-y-2 text-gray-600">
-                                    <li>Designed a hybrid content recommendation engine for Zee's streaming platform using collaborative filtering and content-based NLP techniques.</li>
-                                    <li>Evaluated model performance using RMSE and precision@k metrics; compared cold-start behaviour across filtering strategies.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-         <!-- Education Section -->
-        <section id="education" class="py-16 md:py-24 border-t bg-white rounded-xl shadow-sm">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-gray-800">Education</h2>
-                <div class="mt-8 space-y-6">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900">M.Sc. in Computer Science (AI & ML)</h3>
-                        <p class="text-gray-600">Woolf University (Scaler Neovarsity) | 2024 – Present</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-900">B.Tech, Mechanical Engineering</h3>
-                        <p class="text-gray-600">Biju Patnaik University of Technology | 2011 – 2015</p>
-                    </div>
-                    <!-- <div>
-                        <h3 class="text-xl font-semibold text-gray-900">Certifications</h3>
-                        <p class="text-gray-600 mt-2">Tableau Desktop Specialist</p>
-                        <p class="text-gray-600">Google Data Analytics Professional Certificate</p>
-                    </div> -->
-                </div>
-            </div>
-        </section>
-
-    </main>
-    
-    <!-- Footer -->
-    <footer id="contact" class="bg-gray-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-12 text-center">
-             <h2 class="text-2xl font-bold">Let's Connect</h2>
-             <p class="mt-4 max-w-xl mx-auto">Open to Data Scientist, ML Engineer, and Senior Analyst roles across India and globally. If you have a role that aligns with my skills and experience, I'd love to hear from you.</p>
-             <div class="mt-8">
-                 <a href="mailto:mohandash176@outlook.com" class="bg-[#C08497] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#A96A7E] transition-colors">Mail</a>
-             </div>
-             <div class="mt-8 flex justify-center space-x-6">
-                <a href="https://www.linkedin.com/in/mohan-dash" target="_blank" class="hover:text-[#C08497] transition-colors">LinkedIn</a>
-                <a href="https://github.com/DaMohanD" target="_blank" class="hover:text-[#C08497] transition-colors">GitHub</a>
-             </div>
-             <p class="mt-10 text-sm text-gray-400">&copy; <span id="current-year">2024</span> Mohan Dash. All Rights Reserved.</p>
+        <div>
+          <div>
+            <h3>B.Tech Mechanical Engineering</h3>
+            <p>Biju Patnaik University of Technology</p>
+          </div>
+          <time>2011 – 2015</time>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            // --- UI Setup ---
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+  </div>
+</main>
 
-            // Timeline item toggle
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            timelineItems.forEach(item => {
-                const button = item.querySelector('.toggle-button');
-                button.addEventListener('click', () => {
-                    item.classList.toggle('open');
-                });
-            });
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <h2>Get in touch</h2>
+    <p>I'm open to Data Scientist and ML Engineer roles across India and remote. If you have something that fits, I'd like to hear about it.</p>
+    <div class="foot__links">
+      <a href="mailto:mohandash176@outlook.com">mohandash176@outlook.com</a>
+      <a href="tel:+918743069336">+91 87430 69336</a>
+      <a href="https://www.linkedin.com/in/mohan-dash" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/DaMohanD" target="_blank" rel="noopener">GitHub</a>
+      <a href="Mohan_Dash_Resume.pdf" download>Resume (PDF)</a>
+    </div>
+    <p class="foot__base">© <span id="year">2026</span> Mohan Dash</p>
+  </div>
+</footer>
 
-            // // --- Gemini API Feature ---
-            // const generateBtn = document.getElementById('generate-summary-btn');
-            // const jobDescTextarea = document.getElementById('job-description');
-            // const aiResultContainer = document.getElementById('ai-result-container');
-            // const loader = document.getElementById('loader');
-            // const aiOutput = document.getElementById('ai-output');
-            // const generatedSummaryText = document.getElementById('generated-summary-text');
-            // const errorMessage = document.getElementById('error-message');
-            // const copySummaryBtn = document.getElementById('copy-summary-btn');
+<script>
+document.addEventListener('DOMContentLoaded', function () {
 
-            // generateBtn.addEventListener('click', async () => {
-            //     const jobDescription = jobDescTextarea.value;
-            //     const baseSummary = document.getElementById('base-summary').innerText;
+  // mobile menu
+  var menubtn = document.getElementById('menubtn');
+  var mobilenav = document.getElementById('mobilenav');
+  menubtn.addEventListener('click', function () {
+    var open = mobilenav.classList.toggle('open');
+    menubtn.setAttribute('aria-expanded', String(open));
+  });
+  mobilenav.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      mobilenav.classList.remove('open');
+      menubtn.setAttribute('aria-expanded', 'false');
+    }
+  });
 
-            //     if (!jobDescription.trim()) {
-            //         alert('Please paste a job description first.');
-            //         return;
-            //     }
+  // expandable records
+  document.querySelectorAll('.record').forEach(function (rec) {
+    var head = rec.querySelector('.record__head');
+    head.addEventListener('click', function () {
+      var open = rec.getAttribute('data-open') === '1';
+      rec.setAttribute('data-open', open ? '0' : '1');
+      head.setAttribute('aria-expanded', String(!open));
+    });
+  });
 
-            //     aiResultContainer.classList.remove('hidden');
-            //     aiOutput.classList.add('hidden');
-            //     errorMessage.classList.add('hidden');
-            //     loader.classList.remove('hidden');
+  // scroll spy
+  var links = Array.prototype.slice.call(document.querySelectorAll('.navlinks a'));
+  var targets = links
+    .map(function (l) { return document.querySelector(l.getAttribute('href')); })
+    .filter(Boolean);
 
-            //     const prompt = `You are a professional resume writer. Based on the following professional summary: "${baseSummary}" and this job description: "${jobDescription}", please rewrite the summary to be about 3-4 sentences long. The new summary should strongly highlight the skills and experiences from the original summary that are most relevant to the job description, using keywords from the job description where appropriate. The tone should be professional and confident.`;
-                
-            //     try {
-            //         const apiKey = "";
-            //         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    
-            //         const payload = {
-            //             contents: [{
-            //                 role: "user",
-            //                 parts: [{ text: prompt }]
-            //             }]
-            //         };
-
-            //         const response = await fetch(apiUrl, {
-            //             method: 'POST',
-            //             headers: { 'Content-Type': 'application/json' },
-            //             body: JSON.stringify(payload)
-            //         });
-                    
-            //         if (!response.ok) {
-            //             throw new Error(`API error: ${response.statusText}`);
-            //         }
-
-            //         const result = await response.json();
-                    
-            //         let text = 'Could not generate a response. The model may have returned empty content.';
-            //          if (result.candidates && result.candidates.length > 0 &&
-            //             result.candidates[0].content && result.candidates[0].content.parts &&
-            //             result.candidates[0].content.parts.length > 0) {
-            //             text = result.candidates[0].content.parts[0].text;
-            //         }
-                    
-            //         generatedSummaryText.innerText = text;
-            //         aiOutput.classList.remove('hidden');
-
-            //     } catch (error) {
-            //         console.error("Gemini API call failed:", error);
-            //         errorMessage.classList.remove('hidden');
-            //     } finally {
-            //         loader.classList.add('hidden');
-            //     }
-            // });
-
-            // copySummaryBtn.addEventListener('click', () => {
-            //     const textToCopy = generatedSummaryText.innerText;
-            //     const tempTextArea = document.createElement('textarea');
-            //     tempTextArea.value = textToCopy;
-            //     document.body.appendChild(tempTextArea);
-            //     tempTextArea.select();
-            //     document.execCommand('copy');
-            //     document.body.removeChild(tempTextArea);
-            //     copySummaryBtn.innerText = 'Copied!';
-            //     setTimeout(() => {
-            //         copySummaryBtn.innerText = 'Copy to Clipboard';
-            //     }, 2000);
-            // });
-
-
-            // --- Existing Functionality ---
-            // Active nav link highlighting on scroll
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, { rootMargin: '-30% 0px -70% 0px' });
-            sections.forEach(section => observer.observe(section));
-            
-            // Skills Chart (as before)
-            const ctx = document.getElementById('skillsChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Languages', 'ML & Modeling', 'Data & BI Tools', 'Web & Dev Tools', 'Domain Expertise'],
-                    datasets: [{
-                        label: 'Proficiency / Experience Level',
-                        data: [90, 85, 80, 75, 88],
-                        backgroundColor: 'rgba(192, 132, 151, 0.6)',
-                        borderColor: 'rgba(192, 132, 151, 1)',
-                        borderWidth: 1,
-                    }]
-                },
-                options: {
-                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                    scales: { x: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + '%' } } },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: (c) => `Proficiency: ${c.parsed.x}%`,
-                                afterLabel: (c) => ({
-                                    'Languages': 'Python (Pandas, NumPy, scikit-learn, Matplotlib, Seaborn, Plotly), SQL',
-                                    'ML & Modeling': 'Regression, Classification, Clustering, Ensemble Methods, Recommender Systems, Time-Series',
-                                    'Data & BI Tools': 'Tableau, Advanced Excel, Jupyter Notebook, EDA Pipelines',
-                                    'Web & Dev Tools': 'Git, GitHub, REST APIs, Web App Development & Deployment',
-                                    'Domain Expertise': 'Container Logistics, Depot Ops, Predictive Maintenance, KPI Design'
-                                })[c.label] || ''
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Dynamic Year in Footer
-            const yearSpan = document.getElementById('current-year');
-            if (yearSpan) {
-                yearSpan.textContent = new Date().getFullYear();
-            }
+  if ('IntersectionObserver' in window && targets.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        links.forEach(function (l) {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id);
         });
-    </script>
+      });
+    }, { rootMargin: '-25% 0px -70% 0px' });
+    targets.forEach(function (t) { spy.observe(t); });
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+});
+</script>
 </body>
 </html>
